@@ -1,0 +1,63 @@
+services:
+  dt-postgres:
+    image: postgres:18
+    container_name: dt-postgres
+    environment:
+      POSTGRES_USER: dt
+      POSTGRES_PASSWORD: dt
+      POSTGRES_DB: dt_platform
+    ports:
+      - "5434:5432"
+
+  dt-clickhouse:
+    image: clickhouse/clickhouse-server:25.3
+    container_name: dt-clickhouse
+    environment:
+      CLICKHOUSE_DB: dt_telemetry
+      CLICKHOUSE_USER: dt
+      CLICKHOUSE_PASSWORD: dt
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+
+  dt-redis:
+    image: redis:8
+    container_name: dt-redis
+    ports:
+      - "6380:6379"
+
+  dt-redpanda:
+    image: redpandadata/redpanda:v25.1.1
+    container_name: dt-redpanda
+    command:
+      - redpanda
+      - start
+      - --mode
+      - dev-container
+      - --smp
+      - "1"
+      - --memory
+      - 1G
+      - --reserve-memory
+      - 0M
+      - --node-id
+      - "0"
+      - --check=false
+      - --kafka-addr
+      - PLAINTEXT://0.0.0.0:9092
+      - --advertise-kafka-addr
+      - PLAINTEXT://localhost:9092
+    ports:
+      - "9092:9092"
+      - "9644:9644"
+
+  dt-minio:
+    image: minio/minio:latest
+    container_name: dt-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: dtminio
+      MINIO_ROOT_PASSWORD: dtminio123
+    ports:
+      - "9010:9000"
+      - "9011:9001"

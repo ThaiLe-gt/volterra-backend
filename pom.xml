@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.dt</groupId>
+    <artifactId>dt-backend</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>dt-backend</name>
+
+    <modules>
+        <module>shared/dt-common-lib</module>
+        <module>shared/dt-common-web-lib</module>
+        <module>shared/dt-security-lib</module>
+        <module>shared/dt-observability-lib</module>
+        <module>shared/dt-event-lib</module>
+        <module>shared/dt-permission-lib</module>
+        <module>shared/dt-clickhouse-lib</module>
+        <module>shared/dt-file-lib</module>
+        <module>services/dt-gateway-svc</module>
+        <module>services/dt-auth-svc</module>
+        <module>services/dt-operation-svc</module>
+        <module>services/dt-telemetry-svc</module>
+        <module>services/dt-energy-svc</module>
+        <module>services/dt-command-svc</module>
+        <module>services/dt-alarm-svc</module>
+        <module>services/dt-file-svc</module>
+        <module>services/dt-legacy-dotnet-svc</module>
+    </modules>
+
+    <properties>
+        <java.version>25</java.version>
+        <spring-boot.version>4.0.6</spring-boot.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.14.1</version>
+                    <configuration>
+                        <release>${maven.compiler.release}</release>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

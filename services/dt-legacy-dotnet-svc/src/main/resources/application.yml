@@ -1,0 +1,13 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: dt-legacy-dotnet-svc
+legacy:
+  dotnet:
+    base-url: http://localhost:8088
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
